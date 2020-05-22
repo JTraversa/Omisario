@@ -33,7 +33,7 @@ http://http://localhost:9001/
 ```
 --------------------------------------------------
 
-Disclaimer: This game is not intended for distribution. All rights to the original Super Mario belong to Nintendo. This integration is simply a demonstration of network integration.
+Disclaimer: This game is not intended for distribution. All rights to Super Mario NES belong to Nintendo. Omisario is only a demonstration of OmiseGo, Portis, and pToken integration.
 
 --------------------------------------------------
 <img src="https://nescience.io/wp-content/uploads/2020/05/OmisarioLogo.jpg" width="500" height="640">
