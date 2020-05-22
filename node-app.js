@@ -152,13 +152,6 @@ function transferAPI(request, response) {
 			}); 
 		   });
 }
-[
-{currency: eth,
-amount:1},
-{currency: pbtc,
-amount:2}
-
-
 
 function ethBalanceAPI(request, response) {
 	
@@ -180,7 +173,7 @@ function ethBalanceAPI(request, response) {
 									util.log(aliceChildchainEthBalance);
 		util.log(`>>>>> balanceAPI - Token: ${aliceChildchainEthBalance.currency}`);
 		util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainEthBalance.amount}`);
-		response.json(aliceChildchainEthBalance)
+		response.json(aliceChildchainEthBalance);
 		}
 		
 	else {
@@ -200,28 +193,24 @@ function pbtcBalanceAPI(request, response) {
 	var userAddress = request.res.req.body.userAddress;
 	var balance = childChain.getBalance(userAddress).then(function(res) {
 		childchainBalanceArray = res;
-	var aliceChildchainpbtcBalance = childchainBalanceArray.map((i) => {
-    return {
-      currency:
-        i.currency === "0xeb770b1883dcce11781649e8c4f1ac5f4b40c978" ? "pBTC" : i.currency,
-      amount: web3.utils.fromWei(String(i.amount)),
-			};
-		});
-	if ( aliceChildchainpbtcBalance.length ==  0 ) {
-		aliceChildchainpbtcBalance = {currency: 'ETH',
-									amount: '0'};
-									util.log(aliceChildchainpbtcBalance);
-		util.log(`>>>>> balanceAPI - Token: ${aliceChildchainpbtcBalance.currency}`);
-		util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainpbtcBalance.amount}`);
-		response.json(aliceChildchainpbtcBalance)
+	for (var i = 0; i < childchainBalanceArray.length; ++i) {
+		if (childchainBalanceArray[i].currency == "0xeb770b1883dcce11781649e8c4f1ac5f4b40c978") {
+			var aliceChildchainpbtcBalance = childchainBalanceArray[i];
+			if ( aliceChildchainpbtcBalance.length ==  0 ) {
+				aliceChildchainpbtcBalance = {currency: 'ETH',
+											amount: '0'};
+				util.log(`>>>>> balanceAPI - Token: ${aliceChildchainpbtcBalance.currency}`);
+				util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainpbtcBalance.amount}`);
+				response.json(aliceChildchainpbtcBalance)
+			}
+		
+			else {
+				aliceChildchainpbtcBalance.amount = web3.utils.fromWei(String(aliceChildchainpbtcBalance.amount));
+				util.log(`>>>>> balanceAPI - Token: ${aliceChildchainpbtcBalance.currency}`);
+				util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainpbtcBalance.amount}`);
+				response.json(aliceChildchainpbtcBalance);
+			}
 		}
-		
-	else {
-		util.log(`>>>>> balanceAPI - Token: ${aliceChildchainpbtcBalance[0].currency}`);
-		util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainpbtcBalance[0].amount}`);
-		response.json(aliceChildchainpbtcBalance[0]);
-		
-		
 	}
 	});
 }

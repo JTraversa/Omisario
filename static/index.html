@@ -29,21 +29,21 @@
 	
 	<div class="backgroundBox" style="width: 1780px; height: 300px; background-color: #1F1E23">
 	<div class="ethBalanceBox" style="width: 500px; height: 270px; background-color: #464C57">
-	<div class="ethImage" id="ethImage"><img id="ethImg" src="./eth.png" width="90px" height="90px" class="ethImg" /></div>
+	<div class="ethImage" id="ethImage"><img id="ethImg" src="./img/eth.png" width="90px" height="90px" class="ethImg" /></div>
 	<div class="ethBalanceLabel" id="ethBalanceLabel"> Childchain ETH balance:</div>
 	<div class="ethBalance" id="ethBalance"> 0.000000000000000000</div>
 	</div>
 	
 	<div class="txInfoBox" style="width: 625px; height: 270px; background-color: #0F0F0F">
-	<div class="omgImage" id="omgImage"><img id="omiseImg" src="./capture.png" class="omiseImg" /></div>
+	<div class="omgImage" id="omgImage"><img id="omiseImg" src="./img/omisego.png" class="omiseImg" /></div>
 	<div class="txHashLabel" id="txHashLabel"> OmiseGo Network Transaction Hash:</div>
 	<div class="txBlockLabel" id="txBlockLabel"> OmiseGo Network Transaction Block:</div>
-	<a href ="#" id = "txhash" class="txhash" type="button" onclick="linkTransaction()"> 0x-------------------------</a>
+	<a href ="#" id = "txhash" class="txHashLabel" type="button" onclick="linkTransaction()"><div class="txHash" id="txHash"> 0x-------------------------</div></a>
 	<div class="txBlock" id="txBlock"> 000000</div>
 	</div>
 	
 	<div class="pbtcBalanceBox" style="width: 525px; height: 270px; background-color: #464C57">
-	<div class="pbtcImage" id="pbtcImage"><img id="pbtcImg" src="./pbtc.png" width="90px" height="90px" class="pbtcImg" /></div>
+	<div class="pbtcImage" id="pbtcImage"><img id="pbtcImg" src="./img/pbtc.png" width="90px" height="90px" class="pbtcImg" /></div>
 	<div class="pbtcBalanceLabel" id="pbtcBalanceLabel"> Childchain pBTC balance:</div>
 	<div class="pbtcBalance" id="pbtcBalance"> 0.000000000000000000</div>
 	</div>
@@ -108,7 +108,9 @@ function transfer(amount) {
     xhr.open('POST', '/transfer', true);
     xhr.setRequestHeader("Content-type", "application/json");
 	xhr.onreadystatechange = function() {
+	console.log(readyState);
         if (xhr.readyState === 4) {
+		
             if (xhr.status === 200) {
                 // log(xhr.responseText);
 
@@ -209,7 +211,7 @@ function pbtcBalance() {
                   // log(xhr.responseText);
 
                   let httpResponse = JSON.parse(xhr.responseText);
-				  document.getElementById('ethBalance').innerText = httpResponse.amount; 
+				  document.getElementById('pbtcBalance').innerText = httpResponse.amount; 
                   };
               }
 
@@ -223,23 +225,26 @@ function ethBalance() {
       xhr.open('POST', '/ethBalance', true);
       xhr.setRequestHeader("Content-type", "application/json");
       xhr.onreadystatechange = function() {
+	  console.log(xhr.readyState);
           if (xhr.readyState === 4) {
               if (xhr.status === 200) {
                   // log(xhr.responseText);
 
                   let httpResponse = JSON.parse(xhr.responseText);
-				  document.getElementById('pbtcBalance').innerText = httpResponse.amount; 
+				  document.getElementById('ethBalance').innerText = httpResponse.amount; 
                   };
               }
-
       };
       xhr.send(JSON.stringify(data));
   }
 
-var balanceInterval = setInterval(function() {
+var ethBalanceInterval = setInterval(function() {
   ethBalance();
-  pbtcBalance();
   }, 15000);
+
+var pbtcBalanceInterval = setInterval(function() {
+  pbtcBalance();
+  }, 16000);
 
 function linkTransaction() {
 	txid = document.getElementById('txHash').innerText;
