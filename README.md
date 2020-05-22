@@ -5,7 +5,7 @@
 
 
 -------------------------------------------------
-This integration is run on the Ropsten Ethereum testnet.
+The backend payments for this demonstration are run on the Ropsten Ethereum testnet.
 
 Mainnet connection will not affect payments or game performance, however all payments are accessable only through the Ropsten testnet & OmiseGo testnet.
 
