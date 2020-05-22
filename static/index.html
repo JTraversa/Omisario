@@ -3,9 +3,9 @@
 <html lang="en-us">
 <head>
     <meta charset="utf-8" />
-    <title>Full Screen Mario</title>
-    <meta name="keywords" content="fullscreenmario, full, screen, mario, javascript, html5, gaming, online, online game, fun, distraction" />
-    <meta name="description" content="FullScreenMario is a free HTML5 remake of Nintendo's original Super Mario Bros. Play it here!" />
+    <title>Omisario</title>
+    <meta name="keywords" content="Plasma, Bitcoin, Cryptocurrency, mario, javascript, html5, Portis, web3, Ethereum, Mario, OmiseGo, pTokens" />
+    <meta name="description" content="An integration between the OmiseGo network and Super Mario" />
 
     <!-- build:css index.min.css -->
     <link href="index.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
 
 <body>
     <header>
-        <img src="Theme/Header.gif" alt="FullScreenMario.com" />
+	      <div class="useraddress" id="useraddress">User Address:  0x-------------------------</div>
     </header>
 
     <section id="game">
@@ -26,10 +26,31 @@
     <section id="controls">
         <!-- FSM.UserWrapper will fill out this section... -->
     </section>
+	
+	<div class="backgroundBox" style="width: 1780px; height: 300px; background-color: #1F1E23">
+	<div class="ethBalanceBox" style="width: 500px; height: 270px; background-color: #464C57">
+	<div class="ethImage" id="ethImage"><img id="ethImg" src="./eth.png" width="90px" height="90px" class="ethImg" /></div>
+	<div class="ethBalanceLabel" id="ethBalanceLabel"> Childchain ETH balance:</div>
+	<div class="ethBalance" id="ethBalance"> 0.000000000000000000</div>
+	</div>
+	
+	<div class="txInfoBox" style="width: 625px; height: 270px; background-color: #0F0F0F">
+	<div class="omgImage" id="omgImage"><img id="omiseImg" src="./capture.png" class="omiseImg" /></div>
+	<div class="txHashLabel" id="txHashLabel"> OmiseGo Network Transaction Hash:</div>
+	<div class="txBlockLabel" id="txBlockLabel"> OmiseGo Network Transaction Block:</div>
+	<a href ="#" id = "txhash" class="txhash" type="button" onclick="linkTransaction()"> 0x-------------------------</a>
+	<div class="txBlock" id="txBlock"> 000000</div>
+	</div>
+	
+	<div class="pbtcBalanceBox" style="width: 525px; height: 270px; background-color: #464C57">
+	<div class="pbtcImage" id="pbtcImage"><img id="pbtcImg" src="./pbtc.png" width="90px" height="90px" class="pbtcImg" /></div>
+	<div class="pbtcBalanceLabel" id="pbtcBalanceLabel"> Childchain pBTC balance:</div>
+	<div class="pbtcBalance" id="pbtcBalance"> 0.000000000000000000</div>
+	</div>
+	</div>
 
-    <section id="legal" class="section-text">
-      <div class="useraddress" id="useraddress">0x-------------------------</div>
-      <a href="#" class="releasebutton2-copy w-button" type="button" onclick="transfer()">Release</a>
+    <section id="User" class="section-text">
+      
 
     </section>
 	
@@ -69,7 +90,9 @@ function initialTransfer(address) {
                 // log(xhr.responseText);
 
                 let httpResponse = JSON.parse(xhr.responseText);
-				
+				console.log(httpResponse);
+				document.getElementById('txBlock').innerText = httpResponse.blknum;
+                document.getElementById('txHash').innerText = httpResponse.txhash; 
                 };
             }
 			}
@@ -90,7 +113,8 @@ function transfer(amount) {
                 // log(xhr.responseText);
 
                 let httpResponse = JSON.parse(xhr.responseText);
-				
+				document.getElementById('txBlock').innerText = httpResponse.blknum;
+                document.getElementById('txHash').innerText = httpResponse.txhash; 
                 };
             }
 			}
@@ -136,7 +160,8 @@ function transferpbtc(amount) {
                 // log(xhr.responseText);
 
                 let httpResponse = JSON.parse(xhr.responseText);
-				
+				document.getElementById('txBlock').innerText = httpResponse.blknum;
+                document.getElementById('txHash').innerText = httpResponse.txhash; 
                 };
             }
 			}
@@ -173,19 +198,37 @@ if (pbtcQueueCount > 0) {
 }
 }, 45000);
 
-
-function balance() {
+function pbtcBalance() {
     _userAddress = document.getElementById("useraddress").innerHTML;
     data = {userAddress: _userAddress};
-      xhr.open('POST', '/balance', true);
+      xhr.open('POST', '/pbtcBalance', true);
       xhr.setRequestHeader("Content-type", "application/json");
       xhr.onreadystatechange = function() {
           if (xhr.readyState === 4) {
               if (xhr.status === 200) {
                   // log(xhr.responseText);
 
-                  let aliceChildchainBalance = JSON.parse(xhr.responseText);
+                  let httpResponse = JSON.parse(xhr.responseText);
+				  document.getElementById('ethBalance').innerText = httpResponse.amount; 
+                  };
+              }
 
+      };
+      xhr.send(JSON.stringify(data));
+  }
+  
+function ethBalance() {
+    _userAddress = document.getElementById("useraddress").innerHTML;
+    data = {userAddress: _userAddress};
+      xhr.open('POST', '/ethBalance', true);
+      xhr.setRequestHeader("Content-type", "application/json");
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+              if (xhr.status === 200) {
+                  // log(xhr.responseText);
+
+                  let httpResponse = JSON.parse(xhr.responseText);
+				  document.getElementById('pbtcBalance').innerText = httpResponse.amount; 
                   };
               }
 
@@ -194,10 +237,15 @@ function balance() {
   }
 
 var balanceInterval = setInterval(function() {
-  balance();
+  ethBalance();
+  pbtcBalance();
   }, 15000);
 
-
+function linkTransaction() {
+	txid = document.getElementById('txHash').innerText;
+	url = "https://blockexplorer.ropsten.v1.omg.network/transaction/".concat(txid);
+	window.open(url);
+}
 ///connect to web3 & get default account address
 function getAccounts(callback) {
     web3.eth.getAccounts((error,result) => {

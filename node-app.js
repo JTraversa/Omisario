@@ -44,11 +44,11 @@ function initialTransferAPI(request, response) {
 	  childChain.getFees().then(function(result){
 		   feesForTransactions = result['1'];
 		   	  var ethFeeAmount = feesForTransactions.amount;
-	  childChain.getUtxos("0x84b5ce3eA8CDC1B19Ea1768F1C4075b6937b483b").then(function(result){
+	  childChain.getUtxos("0x00fE460A15B49d09F39b057D0f1A7B9444F4F2BE").then(function(result){
 			var utxos = result;
 			// Create the transaction body
 	  const transactionBody = OmgUtil.transaction.createTransactionBody({
-		fromAddress: "0x84b5ce3eA8CDC1B19Ea1768F1C4075b6937b483b",
+		fromAddress: "0x00fE460A15B49d09F39b057D0f1A7B9444F4F2BE",
 		fromUtxos: utxos,
 		payments: [
 		  {
@@ -66,7 +66,7 @@ function initialTransferAPI(request, response) {
 	  
 	  // Type, sign, and submit the transaction to the Watcher
 	  const typedData = OmgUtil.transaction.getTypedData(transactionBody, "0x96d5d8bc539694e5fa1ec0dab0e6327ca9e680f9")
-	  const privateKeys = new Array(transactionBody.inputs.length).fill("0xF936749BACD9CA85DAE947C9F8FB610FD89AD4D5A2A30641DB62CDAAAD704DF7")
+	  const privateKeys = new Array(transactionBody.inputs.length).fill("0xB7C6D9F4DCFB3FCCF840C75850560FD84B90E8CD0A39C42605A436E239C6F453")
 	  const signatures = childChain.signTransaction(typedData, privateKeys)
 	  const signedTxn = childChain.buildSignedTransaction(typedData, signatures)
 	  childChain.submitTransaction(signedTxn).then(function(result){
@@ -128,7 +128,7 @@ function transferAPI(request, response) {
 		  {
 			owner: userAddress,
 			currency: currency,
-			amount: amount
+			amount: '1'
 		  }
 		],
 		fee: {
@@ -152,40 +152,79 @@ function transferAPI(request, response) {
 			}); 
 		   });
 }
+[
+{currency: eth,
+amount:1},
+{currency: pbtc,
+amount:2}
 
 
 
-function balanceAPI(request, response) {
+function ethBalanceAPI(request, response) {
 	
-	util.log(`>>>>> balanceAPI - User Address: ${request.body.userAddress}`);
+	util.log(`>>>>> balanceAPI - User Address: ${request.res.req.body.userAddress}`);
 	
-	var userAddress = request.body.userAddress;
+	var userAddress = request.res.req.body.userAddress;
 	var balance = childChain.getBalance(userAddress).then(function(res) {
 		childchainBalanceArray = res;
-	var aliceChildchainBalance = childchainBalanceArray.map((i) => {
+	var aliceChildchainEthBalance = childchainBalanceArray.map((i) => {
     return {
       currency:
         i.currency === OmgUtil.transaction.ETH_CURRENCY ? "ETH" : i.currency,
       amount: web3.utils.fromWei(String(i.amount)),
 			};
 		});
-	if ( aliceChildchainBalance.length ==  0 ) {
-		aliceChildchainBalance = {currency: 'ETH',
+	if ( aliceChildchainEthBalance.length ==  0 ) {
+		aliceChildchainEthBalance = {currency: 'ETH',
 									amount: '0'};
-									util.log(aliceChildchainBalance);
-		util.log(`>>>>> balanceAPI - Token: ${aliceChildchainBalance.currency}`);
-		util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainBalance.amount}`);
-		response.json(aliceChildchainBalance)
+									util.log(aliceChildchainEthBalance);
+		util.log(`>>>>> balanceAPI - Token: ${aliceChildchainEthBalance.currency}`);
+		util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainEthBalance.amount}`);
+		response.json(aliceChildchainEthBalance)
 		}
 		
 	else {
-		util.log(`>>>>> balanceAPI - Token: ${aliceChildchainBalance[0].currency}`);
-		util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainBalance[0].amount}`);
-		response.json(aliceChildchainBalance[0]);
+		util.log(`>>>>> balanceAPI - Token: ${aliceChildchainEthBalance[0].currency}`);
+		util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainEthBalance[0].amount}`);
+		response.json(aliceChildchainEthBalance[0]);
+		
+		
 	}
 	});
 }
 
+function pbtcBalanceAPI(request, response) {
+	
+	util.log(`>>>>> balanceAPI - User Address: ${request.res.req.body.userAddress}`);
+	
+	var userAddress = request.res.req.body.userAddress;
+	var balance = childChain.getBalance(userAddress).then(function(res) {
+		childchainBalanceArray = res;
+	var aliceChildchainpbtcBalance = childchainBalanceArray.map((i) => {
+    return {
+      currency:
+        i.currency === "0xeb770b1883dcce11781649e8c4f1ac5f4b40c978" ? "pBTC" : i.currency,
+      amount: web3.utils.fromWei(String(i.amount)),
+			};
+		});
+	if ( aliceChildchainpbtcBalance.length ==  0 ) {
+		aliceChildchainpbtcBalance = {currency: 'ETH',
+									amount: '0'};
+									util.log(aliceChildchainpbtcBalance);
+		util.log(`>>>>> balanceAPI - Token: ${aliceChildchainpbtcBalance.currency}`);
+		util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainpbtcBalance.amount}`);
+		response.json(aliceChildchainpbtcBalance)
+		}
+		
+	else {
+		util.log(`>>>>> balanceAPI - Token: ${aliceChildchainpbtcBalance[0].currency}`);
+		util.log(`>>>>> balanceAPI - Amount: ${aliceChildchainpbtcBalance[0].amount}`);
+		response.json(aliceChildchainpbtcBalance[0]);
+		
+		
+	}
+	});
+}
 
 /*
  * ----- Start of The main server code -----
@@ -210,8 +249,12 @@ app.post('/transfer', function(req, res) {
     transferAPI(req, res);
 });
 
-app.post('/balance', function(req, res) {
-    balanceAPI(req, res);
+app.post('/ethBalance', function(req, res) {
+    ethBalanceAPI(req, res);
+});
+
+app.post('/pbtcBalance', function(req, res) {
+    pbtcBalanceAPI(req, res);
 });
 
 app.listen(9001);

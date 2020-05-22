@@ -13,12 +13,14 @@ body {
 }
 
 header {
-    height: 49px;
+    height: 30px;
     overflow: hidden;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    margin-left: 1400px;
+    margin-top: 10px;
 }
 
 section {
@@ -49,6 +51,7 @@ a {
 
 /* Header */
 
+
 #header-right {
     position: absolute;
     top: 0;
@@ -66,7 +69,60 @@ a {
     }
 }
 
+.backgroundBox {
+	border-radius: 40px;
+	transform: translate(50px, 45px);
+}
 
+.ethBalanceBox {
+	border-radius: 30px;
+	transform: translate(50px,15px);
+}
+.ethImage{
+	transform: translate(215px,10px)
+}
+.ethBalanceLabel {
+	transform: translate(25px, 50px);
+}
+.ethBalance {
+	transform: translate(260px, 33px);
+}
+.omgImage {
+	border-radius: 20px;
+	transform: translate(234px, 10px);
+}
+.omiseImg{
+	border-radius: 20px;
+}
+.txInfoBox {
+	border-radius: 30px;
+	transform: translate(565px, -255px);
+}
+.txHashLabel{
+	transform: translate(190px, 20px);
+}
+.txBlockLabel{
+	transform: translate(190px, 76px);
+}
+.txHash{
+	transform: translate(66.66px, 10px);
+}
+.txBlock{
+	transform: translate(290px, 70px);
+}
+.pbtcBalanceBox {
+	border-radius: 30px;
+	transform: translate(1205px, -525px);
+}
+.pbtcImage {
+	transform: translate(215px,10px)
+}
+.pbtcBalanceLabel {
+	transform: translate(25px, 50px);
+}
+.pbtcBalance {
+	transform: translate(260px, 33px);
+}
 /* Game section */
 
 section#game {
