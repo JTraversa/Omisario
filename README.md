@@ -34,5 +34,5 @@ http://http://localhost:9001/
 Disclaimer: This game is not intended for distribution. All rights to the original Super Mario belong to Nintendo. This integration is simply a demonstration of network integration.
 
 --------------------------------------------------
-<img src="https://nescience.io/wp-content/uploads/2020/05/OmisarioLogo.jpg">
+<img src="https://nescience.io/wp-content/uploads/2020/05/OmisarioLogo.jpg" width="500" height="640">
 
