@@ -32,3 +32,7 @@ http://http://localhost:9001/
 --------------------------------------------------
 
 Disclaimer: This game is not intended for distribution. All rights to the original Super Mario belong to Nintendo. This integration is simply a demonstration of network integration.
+
+--------------------------------------------------
+<img src="https://imgur.com/a/LL1Z7vb" width="500" height="640">
+
