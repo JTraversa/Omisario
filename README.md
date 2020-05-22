@@ -3,7 +3,9 @@
 
 
 
-In order to run a local version of the game, ensure you have installed the required packages from the packages.json. You can do so using:
+In order to run a local version of the game, ensure you have installed the required packages from the packages.json. 
+
+You can do so using:
 
 ```
 ~ npm install package-name
