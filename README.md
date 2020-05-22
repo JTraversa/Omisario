@@ -13,7 +13,7 @@ Mainnet connection will not affect payments or game performance, however all pay
 
 In order to run a local version of the game, ensure you have installed the required packages from the packages.json. 
 
-You can do so using:
+You can do so using npm:
 
 ```
 ~ npm install package-name
