@@ -6,7 +6,7 @@
 -------------------------------------------------
 This integration is run on the Ropsten Ethereum testnet.
 
-Staying connected to the mainnet will not affect payments or game performance, but all payments are only accessable through the ropsten testnet & ropsten OmiseGo testnet.
+Mainnet connection will not affect payments or game performance, however all payments are accessable only through the Ropsten testnet & OmiseGo testnet.
 
 --------------------------------------------------
 
