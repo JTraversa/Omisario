@@ -38,7 +38,7 @@
 	<div class="omgImage" id="omgImage"><img id="omiseImg" src="./img/omisego.png" class="omiseImg" /></div>
 	<div class="txHashLabel" id="txHashLabel"> OmiseGo Network Transaction Hash:</div>
 	<div class="txBlockLabel" id="txBlockLabel"> OmiseGo Network Transaction Block:</div>
-	<a href ="#" id = "txhash" class="txHashLabel" type="button" onclick="linkTransaction()"><div class="txHash" id="txHash"> 0x-------------------------</div></a>
+	<a href ="#" id = "txHashLabel" class="txHashLabel" type="button" onclick="linkTransaction()"><div class="txHash" id="txHash"> 0x-------------------------</div></a>
 	<div class="txBlock" id="txBlock"> 000000</div>
 	</div>
 	
@@ -67,7 +67,9 @@
 <script>
 
 var xhr = new XMLHttpRequest();
-
+var httprequest = new XMLHttpRequest();
+var httprequest2 = new XMLHttpRequest();
+var httprequest3 = new XMLHttpRequest();
 var initialPbtc = 0;
 var coinQueueCount = 0;
 var pbtcQueueCount = 0;
@@ -79,8 +81,6 @@ var baseAddress = baseAccount[0].address;
 var basePrivate = baseAccount[0].privateKey;
 initialTransfer(baseAddress);
 
-
-
 function initialTransfer(address) {
     xhr.open('POST', '/initialTransfer', true);
     xhr.setRequestHeader("Content-type", "application/json");
@@ -90,6 +90,54 @@ function initialTransfer(address) {
                 // log(xhr.responseText);
 
                 let httpResponse = JSON.parse(xhr.responseText);
+				document.getElementById('txBlock').innerText = httpResponse.blknum;
+                document.getElementById('txHash').innerText = httpResponse.txhash; 
+                };
+            }
+			}
+	data = {
+			"baseAddress": baseAddress,
+			"tokenAddress": "0x0000000000000000000000000000000000000000",
+			"amount": "3000000000000001"
+			};
+    xhr.send(JSON.stringify(data));
+}
+
+function transfer(amount) {
+    httprequest.open('POST', '/transfer', true);
+	httprequest.setRequestHeader("Content-type", "application/json");
+	httprequest.onreadystatechange = function() {
+	console.log(httprequest.readyState);
+        if (httprequest.readyState === 4) {
+            if (httprequest.status === 200) {
+                // log(xhr.responseText);
+			
+                let httpResponse = JSON.parse(httprequest.responseText);
+				document.getElementById('txBlock').innerText = httpResponse.blknum;
+                document.getElementById('txHash').innerText = httpResponse.txhash; 
+                };
+            }
+			}
+	data = {
+			"userAddress": document.getElementById("useraddress").innerHTML,
+			"tokenAddress": "0x0000000000000000000000000000000000000000",
+			"amount": amount,
+			"baseAddress": baseAddress,
+			"basePrivate": basePrivate
+			};
+			
+    httprequest.send(JSON.stringify(data));
+}
+
+function initialTransferPbtc(address) {
+    httprequest3.open('POST', '/initialTransfer', true);
+    httprequest3.setRequestHeader("Content-type", "application/json");
+	httprequest3.onreadystatechange = function() {
+        if (httprequest3.readyState === 4) {
+            if (httprequest3.status === 200) {
+                // log(xhr.responseText);
+
+                let httpResponse = JSON.parse(httprequest3.responseText);
 				console.log(httpResponse);
 				document.getElementById('txBlock').innerText = httpResponse.blknum;
                 document.getElementById('txHash').innerText = httpResponse.txhash; 
@@ -98,70 +146,22 @@ function initialTransfer(address) {
 			}
 	data = {
 			"baseAddress": baseAddress,
-			"tokenAddress": "0x0000000000000000000000000000000000000000",
-			"amount": "30000000000000001"
-			};
-    xhr.send(JSON.stringify(data));
-}
-
-function transfer(amount) {
-    xhr.open('POST', '/transfer', true);
-    xhr.setRequestHeader("Content-type", "application/json");
-	xhr.onreadystatechange = function() {
-	console.log(readyState);
-        if (xhr.readyState === 4) {
-		
-            if (xhr.status === 200) {
-                // log(xhr.responseText);
-
-                let httpResponse = JSON.parse(xhr.responseText);
-				document.getElementById('txBlock').innerText = httpResponse.blknum;
-                document.getElementById('txHash').innerText = httpResponse.txhash; 
-                };
-            }
-			}
-	data = {
-			"userAddress": document.getElementById("useraddress").innerHTML,
-			"tokenAddress": "0x0000000000000000000000000000000000000000",
-			"amount": amount,
-			"baseAddress": baseAddress,
-			"basePrivate": basePrivate
-			};
-			
-    xhr.send(JSON.stringify(data));
-}
-
-function initialTransferPbtc(address) {
-    xhr.open('POST', '/initialTransfer', true);
-    xhr.setRequestHeader("Content-type", "application/json");
-	xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                // log(xhr.responseText);
-
-                let httpResponse = JSON.parse(xhr.responseText);
-				
-                };
-            }
-			}
-	data = {
-			"baseAddress": baseAddress,
 			"tokenAddress": "0xeb770b1883dcce11781649e8c4f1ac5f4b40c978",
 			"amount": "1000000"
 			};
-    xhr.send(JSON.stringify(data));
+    httprequest3.send(JSON.stringify(data));
 }
 
 
 function transferpbtc(amount) {
-    xhr.open('POST', '/transfer', true);
-    xhr.setRequestHeader("Content-type", "application/json");
-	xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
+    httprequest2.open('POST', '/transfer', true);
+    httprequest2.setRequestHeader("Content-type", "application/json");
+	httprequest2.onreadystatechange = function() {
+        if (httprequest2.readyState === 4) {
+            if (httprequest2.status === 200) {
                 // log(xhr.responseText);
 
-                let httpResponse = JSON.parse(xhr.responseText);
+                let httpResponse = JSON.parse(httprequest2.responseText);
 				document.getElementById('txBlock').innerText = httpResponse.blknum;
                 document.getElementById('txHash').innerText = httpResponse.txhash; 
                 };
@@ -175,30 +175,27 @@ function transferpbtc(amount) {
 			"basePrivate": basePrivate
 			};
 			
-    xhr.send(JSON.stringify(data));
+    httprequest2.send(JSON.stringify(data));
 }
 
 
 var transferInterval = setInterval(function() {
 if (initialPbtc == 1) {
-	initialPbtc = 2;
-	initialTransferPbtc();
-	}
-if (initialPbtc == 0) {
-initialPbtc = 1;
-	}
-if (initialPbtc == 2) {
 if (coinQueueCount > 0) {
 	transfer(coinQueueCount);
 	coinQueueCount = 0;
 	}
-else {
 if (pbtcQueueCount > 0) {
 	transferpbtc(pbtcQueueCount);
 	pbtcQueueCount = 0;
 	}}
+else {
+if (initialPbtc == 0) {
+	initialPbtc = 1;
+	initialTransferPbtc();
+	}
 }
-}, 45000);
+}, 60000);
 
 function pbtcBalance() {
     _userAddress = document.getElementById("useraddress").innerHTML;
@@ -218,14 +215,13 @@ function pbtcBalance() {
       };
       xhr.send(JSON.stringify(data));
   }
-  
+
 function ethBalance() {
     _userAddress = document.getElementById("useraddress").innerHTML;
     data = {userAddress: _userAddress};
       xhr.open('POST', '/ethBalance', true);
       xhr.setRequestHeader("Content-type", "application/json");
       xhr.onreadystatechange = function() {
-	  console.log(xhr.readyState);
           if (xhr.readyState === 4) {
               if (xhr.status === 200) {
                   // log(xhr.responseText);
