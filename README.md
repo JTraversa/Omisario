@@ -16,10 +16,10 @@ In order to run a local version of the game, ensure you have installed the requi
 You can do so using npm:
 
 ```
- npm install @omisego/omg-js
- npm install body-parser
- npm install express
- npm install web3
+npm install @omisego/omg-js
+npm install body-parser
+npm install express
+npm install web3
 ```
 
 After dependencies have been installed, using a command prompt navigate to the directory and execute: 
