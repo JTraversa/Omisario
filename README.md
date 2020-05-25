@@ -26,7 +26,7 @@ npm install package-name
 After dependencies have been installed, using a command prompt navigate to the directory and execute: 
 
 ```
-node node-app.js
+node index.js
 ``` 
 
 You can then access the game in any browser by navigating to:
