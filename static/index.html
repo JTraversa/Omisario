@@ -16,7 +16,7 @@
 
 <body>
     <header>
-	      <div class="useraddress" id="useraddress">User Address:  0x-------------------------</div>
+	      <a href ="#" id = "useraddress" class="useraddress" type="button" onclick="linkWallet()"><div class="useraddress" id="useraddress">User Address:  0x-------------------------</div></a>
     </header>
 
     <section id="game">
@@ -246,6 +246,11 @@ function linkTransaction() {
 	url = "https://blockexplorer.ropsten.v1.omg.network/transaction/".concat(txid);
 	window.open(url);
 }
+function linkWallet() {
+	txid = document.getElementById('useraddress').innerText;
+	url = "https://blockexplorer.ropsten.v1.omg.network/address/".concat(txid);
+	window.open(url);
+}		
 ///connect to web3 & get default account address
 function getAccounts(callback) {
     web3.eth.getAccounts((error,result) => {
