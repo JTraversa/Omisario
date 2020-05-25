@@ -16,7 +16,6 @@ In order to run a local version of the game, ensure you have installed the requi
 You can do so using npm:
 
 ```
-npm install package-name
  npm install @omisego/omg-js
  npm install body-parser
  npm install express
