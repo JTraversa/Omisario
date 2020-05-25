@@ -107,7 +107,6 @@ function transfer(amount) {
     httprequest.open('POST', '/transfer', true);
 	httprequest.setRequestHeader("Content-type", "application/json");
 	httprequest.onreadystatechange = function() {
-	console.log(httprequest.readyState);
         if (httprequest.readyState === 4) {
             if (httprequest.status === 200) {
                 // log(xhr.responseText);
