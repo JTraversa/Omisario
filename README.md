@@ -30,9 +30,12 @@ node index.js
 
 You can then access the game in any browser by navigating to:
 
-```
 http://localhost:9001/
-```
+
+You can access the live version by navigating to:
+
+https://omisario.whsieh2.now.sh/
+
 --------------------------------------------------
 
 Disclaimer: This game is not intended for distribution. All rights to Super Mario NES belong to Nintendo. Omisario is only a demonstration of OmiseGo, Portis, and pToken integration.
