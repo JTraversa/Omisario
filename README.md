@@ -10,6 +10,8 @@ The backend payments for this demonstration are run on the Ropsten Ethereum test
 
 Mainnet connection will not affect payments or game performance, however all payments are accessable only through the Ropsten testnet & OmiseGo testnet.
 
+Note: The Live deployment has had graphical issues with displaying pBTC. We advise a local build to verify it functions correctly.
+
 --------------------------------------------------
 
 In order to run a local version of the game, ensure you have installed the required packages from the packages.json. 
