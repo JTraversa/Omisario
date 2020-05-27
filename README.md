@@ -47,6 +47,8 @@ Only one user can start a session per childchain block (we use one seed wallet).
 
 The testnet seems to have unreliable blocktimes (15-60s), this on occasion causes utxo build errors.
 
+--------------------------------------------------
+
 Notes:
 
 Our live deployment has the following bugs currently:
