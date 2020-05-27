@@ -49,9 +49,9 @@ The testnet seems to have unreliable blocktimes (15-60s), this on occasion cause
 
 Notes:
 
-Our live deployment has 1 bug currently:
+Our live deployment has the following bugs currently:
 
-A visual bug that fails to properly display pBTC balances
+1. A visual bug that fails to properly display pBTC balances
 
 That said, if you have node already installed, we recommend the local build which does not have these issues.
 
