@@ -41,6 +41,22 @@ https://omisario.whsieh2.now.sh/
 
 --------------------------------------------------
 
+Limitations:
+
+Only one user can start a session per childchain block (we use one seed wallet).
+
+The testnet seems to have unreliable blocktimes (15-60s), this on occasion causes utxo build errors.
+
+Notes:
+
+Our live deployment has 1 bug currently:
+
+A visual bug that fails to properly display pBTC balances
+
+That said, if you have node already installed, we recommend the local build which does not have these issues.
+
+--------------------------------------------------
+
 Disclaimer: This game is not intended for distribution. All rights to Super Mario NES belong to Nintendo. Omisario is only a demonstration of OmiseGo, Portis, and pToken integration.
 
 --------------------------------------------------
